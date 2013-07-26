@@ -6,12 +6,13 @@ var nodeEnv = process.env.NODE_ENV || 'development'
 var port = process.env.PORT || '3000'
 
 try {
-  var path = process.env.current_path || './';
+  var path = process.env.shared_path || './';
   var doc = require(path + '/config/ripple.yml')[nodeEnv];
   var config = {host: doc.host, port: doc.http_port}
 } catch(e) {
+  console.log(e);
   console.log('nothing riak config at ./config/ripple.yml');
-  exit();
+  process.exit();
 }
 
 var riakDB = require('riak-js').getClient(config);
